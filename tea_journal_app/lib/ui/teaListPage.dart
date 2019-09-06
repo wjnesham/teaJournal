@@ -37,6 +37,10 @@ class _TeaListPageState extends State<TeaListPage> {
   Future<void> executeAfterBuild() async {
     String welcomeMsg = 'Welcome to Molly\'s Tea App!';
 
+    if (Singleton.instance.teaList == null) {
+      Singleton.instance.teaList = new List<Tea>();
+    }
+
     showToast(_scaffoldKey, welcomeMsg);
   }
 
@@ -88,8 +92,14 @@ class _TeaListPageState extends State<TeaListPage> {
                                   child: Container(
                                       child: Column(
                                         children: <Widget>[
-                                          Text(Singleton.instance.teaList[index].title),
-                                          Text(Singleton.instance.teaList[index].description),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(Singleton.instance.teaList[index].title),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                                            child: Text(Singleton.instance.teaList[index].description),
+                                          ),
                                         ],
                                       ),
 
@@ -102,6 +112,7 @@ class _TeaListPageState extends State<TeaListPage> {
                                       icon: Icons.delete_forever,
                                       onTap: () {
                                         if(Singleton.instance.isValidUpcDbEntriesIndex(index)) {
+
                                           showToast(_scaffoldKey, 'Deleted item.');
                                         } else {
                                           print("Invalid index = $index");
@@ -117,6 +128,12 @@ class _TeaListPageState extends State<TeaListPage> {
 
                               onTap: (){
                                 // onTap for teaList[index]
+                                print(Singleton.instance.teaList[index].title);
+                                setState(() {
+                                  teaTextController.text = Singleton.instance.teaList[index].title;
+                                  descriptionController.text = Singleton.instance.teaList[index].description;
+                                });
+
                               },
                             );
                           },
@@ -131,6 +148,9 @@ class _TeaListPageState extends State<TeaListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          if (Singleton.instance.teaList == null) {
+            Singleton.instance.teaList = new List<Tea>();
+          }
           addTeaToList(teaTextController.text, descriptionController.text);
         },
         tooltip: 'Add a new tea',
@@ -145,14 +165,14 @@ class _TeaListPageState extends State<TeaListPage> {
         MaterialPageRoute(
           builder: (context) => PersnicketeaPage(),
         )
-    )
-    );
+    ));
   }
 
   Widget persnicketeaButton (BuildContext context) {
     return GestureDetector(
       onTap: () {
-
+        // Go to webView
+        goToPersnicketea(context);
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -169,7 +189,7 @@ class _TeaListPageState extends State<TeaListPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Sort",
+                  "Store",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold
@@ -183,13 +203,31 @@ class _TeaListPageState extends State<TeaListPage> {
     );
   }
 
-  addTeaToList (String title, String description) {
+  Future<void> addTeaToList (String title, String description) async {
     Tea newTea = Tea(title: title, description: description);
+
+    if (await teaSqflite.bean.findOne(title) != null) {
+      teaSqflite.bean.removeOne(title).then((_) => setState(() {
+        Singleton.instance.teaList.removeWhere((tea) => tea.title == title);
+        teaSqflite.bean.addUpcToDevice(newTea, "");
+      }));
+    } else {
+      setState(() {
+        teaSqflite.bean.addUpcToDevice(newTea, "");
+      });
+    }
+
     setState(() {
       teaTextController.text = "";
       descriptionController.text = "";
-//      Singleton.instance.teaList.add(newTea);
-      teaSqflite.bean.addUpcToDevice(newTea, "");
+    });
+  }
+
+  Future<void> deleteTea (Tea tea) async {
+    setState(() {
+      if (tea != null) {
+        teaSqflite.bean.removeOne(tea.title);
+      }
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tea_journal_app/utils/uiUtils.dart';
 
 import 'ui/teaListPage.dart';
 
@@ -43,9 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
               'Tea List',
               style: Theme.of(context).textTheme.display1,
             ),
@@ -57,16 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
           addNewTea(context);
         },
         tooltip: 'Add a new tea',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        child: Icon(Icons.free_breakfast),
+      ),
     );
   }
 
-  addNewTea (BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginPage(),
-        ));
-  }
 }

@@ -41,11 +41,39 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_slidable:
+    dependency: "direct main"
+    description:
+      name: flutter_slidable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  jaguar_orm:
+    dependency: "direct main"
+    description:
+      name: jaguar_orm
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.6"
+  jaguar_query:
+    dependency: transitive
+    description:
+      name: jaguar_query
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.8"
+  jaguar_query_sqflite:
+    dependency: "direct main"
+    description:
+      name: jaguar_query_sqflite
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.10"
   matcher:
     dependency: transitive
     description:
@@ -67,6 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.2"
+  path_provider:
+    dependency: "direct main"
+    description:
+      name: path_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.2"
   pedantic:
     dependency: transitive
     description:
@@ -74,6 +109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0+1"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   quiver:
     dependency: transitive
     description:
@@ -93,6 +135,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.5"
+  sqflite:
+    dependency: transitive
+    description:
+      name: sqflite
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6+4"
   stack_trace:
     dependency: transitive
     description:
@@ -114,6 +163,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0+1"
   term_glyph:
     dependency: transitive
     description:
@@ -144,3 +200,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.2.2 <3.0.0"
+  flutter: ">=1.2.1 <2.0.0"

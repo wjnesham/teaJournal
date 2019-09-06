@@ -17,6 +17,12 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  path_provider: ^1.2.0
+  jaguar_orm: ^2.2.6
+  flutter_slidable: ^0.5.3
+  jaguar_query_sqflite: ^2.2.10
+
+
   flutter:
     sdk: flutter
 

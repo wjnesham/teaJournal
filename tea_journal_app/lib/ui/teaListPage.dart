@@ -62,88 +62,115 @@ class _TeaListPageState extends State<TeaListPage> {
 //        title: Text("Tea List"),
 //      ),
       body: standardContainer(
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: getTextField('Tea', teaTextController, false, TextInputType.emailAddress, context),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
-                        child: getTextField('Description', descriptionController, false, TextInputType.text, context),
-                      ),
-                      Expanded(
-                        child: ListView.separated(
-                          padding: const EdgeInsets.all(8.0),
+//                  Column(
+//                    children: <Widget>[
 
-                          itemCount: Singleton.instance.teaList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              child: Slidable(
-                                actionPane: SlidableDrawerActionPane(),
-                                actionExtentRatio: 0.25,
-                                child: Container(
-                                  decoration: new BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: new BorderRadius.all(
-                                        const Radius.circular(20.0)
-                                    ),
-                                  ),
-                                  child: Container(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(Singleton.instance.teaList[index].title),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
-                                            child: Text(Singleton.instance.teaList[index].description),
-                                          ),
-                                        ],
-                                      ),
-
-                                  ),
+                      NestedScrollView(
+                        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                          return <Widget>[
+                            SliverOverlapAbsorber(
+                              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                              child: SliverAppBar(
+                                title: const Text('Enter New Tea Here'), // This is the title in the app bar.
+                                pinned: true,
+                                expandedHeight: 150.0,
+                                forceElevated: innerBoxIsScrolled,
+                                bottom: TabBar(
+                                  // These are the widgets to put in each tab in the tab bar.
+                                  tabs: Singleton.instance.teaList.map((Tea tea) => Tab(text: tea.title)).toList(),
                                 ),
-                                actions: <Widget>[
-                                  Container(
-                                    child: IconSlideAction(
-                                      color: Colors.redAccent,
-                                      icon: Icons.delete_forever,
-                                      onTap: () {
-                                        if(Singleton.instance.isValidUpcDbEntriesIndex(index)) {
-
-                                          showToast(_scaffoldKey, 'Deleted item.');
-                                        } else {
-                                          print("Invalid index = $index");
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                                secondaryActions: <Widget>[
-                                  // Swipe the other way...
-                                ],
                               ),
-
-                              onTap: (){
-                                // onTap for teaList[index]
-                                print(Singleton.instance.teaList[index].title);
-                                setState(() {
-                                  teaTextController.text = Singleton.instance.teaList[index].title;
-                                  descriptionController.text = Singleton.instance.teaList[index].description;
-                                });
-
-                              },
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) => const Divider(
-                            height: 8.0,
-                          ),
+                            ),
+                          ];
+                        },
+                        body: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: getTextField('Tea', teaTextController, false, TextInputType.emailAddress, context),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                              child: getTextField('Description', descriptionController, false, TextInputType.text, context),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+
+
+//                      Expanded(
+//                        child: ListView.separated(
+//                          padding: const EdgeInsets.all(8.0),
+//
+//                          itemCount: Singleton.instance.teaList.length,
+//                          itemBuilder: (BuildContext context, int index) {
+//                            return GestureDetector(
+//                              child: Slidable(
+//                                actionPane: SlidableDrawerActionPane(),
+//                                actionExtentRatio: 0.25,
+//                                child: Container(
+//                                  decoration: new BoxDecoration(
+//                                    color: Colors.white,
+//                                    borderRadius: new BorderRadius.all(
+//                                        const Radius.circular(20.0)
+//                                    ),
+//                                  ),
+//                                  child: Container(
+//                                      child: Column(
+//                                        children: <Widget>[
+//                                          Padding(
+//                                            padding: const EdgeInsets.all(8.0),
+//                                            child: Text(Singleton.instance.teaList[index].title),
+//                                          ),
+//                                          Padding(
+//                                            padding: const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+//                                            child: Text(Singleton.instance.teaList[index].description),
+//                                          ),
+//                                        ],
+//                                      ),
+//
+//                                  ),
+//                                ),
+//                                actions: <Widget>[
+//                                  Container(
+//                                    child: IconSlideAction(
+//                                      color: Colors.redAccent,
+//                                      icon: Icons.delete_forever,
+//                                      onTap: () {
+//                                        if(Singleton.instance.isValidUpcDbEntriesIndex(index)) {
+//
+//                                          showToast(_scaffoldKey, 'Deleted item.');
+//                                        } else {
+//                                          print("Invalid index = $index");
+//                                        }
+//                                      },
+//                                    ),
+//                                  ),
+//                                ],
+//                                secondaryActions: <Widget>[
+//                                  // Swipe the other way...
+//                                ],
+//                              ),
+//
+//                              onTap: (){
+//                                // onTap for teaList[index]
+//                                print(Singleton.instance.teaList[index].title);
+//                                setState(() {
+//                                  teaTextController.text = Singleton.instance.teaList[index].title;
+//                                  descriptionController.text = Singleton.instance.teaList[index].description;
+//                                });
+//
+//                              },
+//                            );
+//                          },
+//                          separatorBuilder: (BuildContext context, int index) => const Divider(
+//                            height: 8.0,
+//                          ),
+//                        ),
+//                      ),
+
+//                    ],
+//                  ),
 
       ),
       floatingActionButton: FloatingActionButton(
